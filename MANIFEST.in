@@ -1,0 +1,4 @@
+include langformers/generators/static/*
+include langformers/generators/chat/*
+
+exclude **/.DS_Store

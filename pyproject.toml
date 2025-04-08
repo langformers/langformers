@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=42", "wheel", "setuptools_scm>=6.4"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "langformers"
+dynamic = ["version", "dependencies"]
+authors = [
+    {name = "Rabindra Lamsal", email = "mail@langformers.com"},
+]
+description = "🚀 Unified NLP Pipelines for Language Models"
+readme = "README.md"
+requires-python = ">=3.9"
+license = "Apache-2.0"
+
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+[project.urls]
+Homepage = "https://github.com/langformers/langformers"
+Documentation = "https://langformers.com"
+Repository = "https://github.com/langformers/langformers"
+Issues = "https://github.com/langformers/langformers/issues"
+
+[tool.setuptools.packages]
+find = {}
+
+[tool.setuptools.package-data]
+"langformers.generators.static" = ["*.html", "*.js", "*.css"]
+"langformers.generators.chat" = ["*.html", "*.js", "*.css"]
+
+[tool.setuptools_scm]
+write_to = "langformers/_version.py"
+fallback_version = "0.1.0"

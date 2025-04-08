@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <title>Langformers Chat</title>
+    <link href="/static/favicon.svg" rel="icon" type="image/x-icon" />
+    <link href="/static/output.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .message pre {
+            font-family: inherit;
+            white-space: pre-wrap;
+            margin: 0;
+        }
+
+        .typing-indicator:after {
+            content: '...';
+            display: inline-block;
+            width: 1.5em;
+            text-align: left;
+            animation: typing 1.5s infinite;
+        }
+
+        @keyframes typing {
+            0% { content: '.'; }
+            33% { content: '..'; }
+            66% { content: '...'; }
+        }
+
+        .textarea-auto-height {
+            resize: none;
+            min-height: 48px;
+            max-height: 200px;
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 3px;
+        }
+
+        /* Main layout */
+        #app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        #chat-container {
+            flex: 1;
+            display: flex;
+            overflow: hidden;
+        }
+
+        #chat-box {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1rem;
+        }
+
+        #input-area {
+            position: sticky;
+            bottom: 0;
+            background: white;
+            border-top: 1px solid #e5e7eb;
+            padding: 1rem;
+        }
+
+        ::-webkit-scrollbar {
+            width: 4px;
+            height: 4px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: rgba(0,0,0,0.05);
+            border-radius: 50px;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.2);
+            border-radius: 4px;
+        }
+
+        .no-custom-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-custom-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        .think-style {
+            color: #ccc;
+            font-size: 0.8rem;
+        }
+    </style>
+
+    <link href="/static/default.min.css" rel="stylesheet" />
+    <script src="/static/marked.min.js"></script>
+    <script src="/static/highlight.min.js"></script>
+    <script src="/static/he.min.js"></script>
+</head>
+<body class="bg-gray-50">
+    <!-- Main Container -->
+    <div id="app-container">
+        <div id="chat-container">
+            <!-- Sidebar (Hidden on mobile) -->
+            <div class="sidebar hidden md:flex w-72 bg-white border-r border-gray-200 flex-col" onclick="event.stopPropagation()">
+                <div class="p-4 border-b border-gray-200">
+                    <h2 class="text-lg font-semibold">LLM Settings</h2>
+                </div>
+                <div class="flex-1 overflow-y-auto p-4 space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700" for="temperature">Temperature (Creativity)</label>
+                        <div class="flex items-center gap-3">
+                            <input class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer" id="temperature" max="1.9" min="0.1" oninput="updateSliderValue('temperature', this.value)" step="0.1"
+                                   type="range"
+                                   value="0.5">
+                            <span class="text-sm w-10 text-center font-medium" id="temperature-value">0.5</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700" for="max_length">Response Length</label>
+                        <div class="flex items-center gap-3">
+                            <input class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer" id="max_length" max="50000" min="10" oninput="updateSliderValue('max_length', this.value)" step="1000"
+                                   type="range"
+                                   value="5000">
+                            <span class="text-sm w-10 text-center font-medium" id="max_length-value">5000</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700" for="top_p">Focus</label>
+                        <div class="flex items-center gap-3">
+                            <input class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer" id="top_p" max="1.0" min="0.1" oninput="updateSliderValue('top_p', this.value)" step="0.1"
+                                   type="range"
+                                   value="1">
+                            <span class="text-sm w-10 text-center font-medium" id="top_p-value">1</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700" for="memory_k">Memory</label>
+                        <div class="flex items-center gap-3">
+                            <input class="w-full h-2 bg-gray-200 rounded-full appearance-none cursor-pointer" id="memory_k" max="50" min="2" oninput="updateSliderValue('memory_k', this.value)" step="1"
+                                   type="range"
+                                   value="10">
+                            <span class="text-sm w-10 text-center font-medium" id="memory_k-value">10</span>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700" for="system-prompt">System Prompt</label>
+                        <textarea class="w-full p-2 text-sm border border-gray-300 rounded-md bg-white textarea-auto-height" id="system-prompt"
+                                  rows="4">{{ default_chat_prompt_system }}</textarea>
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium mb-2 text-gray-700" for="authorization-token">Authorization Token</label>
+                        <textarea class="w-full p-2 text-sm border border-gray-300 rounded-md bg-white textarea-auto-height text-gray-500" id="authorization-token"
+                                  rows="2" placeholder="Enter your token here, if the endpoint requires one."></textarea>
+                    </div>
+
+                    <button class="w-full py-2 text-sm bg-gray-100 hover:bg-gray-200 rounded-md transition-colors flex items-center justify-center gap-2" onclick="exportChat()">
+                        <svg class="h-4 w-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path clip-rule="evenodd" d="M3 17a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1zm3.293-7.707a1 1 0 011.414 0L9 10.586V3a1 1 0 112 0v7.586l1.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z" fill-rule="evenodd" />
+                        </svg>
+                        Export Chat
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chat Area -->
+            <div class="flex-1 flex flex-col h-full">
+                <!-- Header -->
+                <div class="bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <img alt="Logo" class="w-8 h-8" src="/static/logo.svg">
+                        <h1 class="text-xl font-semibold">Langformers Chat</h1>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <button class="md:hidden p-2 rounded-full hover:bg-gray-200 transition-colors" id="mobile-settings-btn" onclick="toggleMobileSidebar()">
+                            <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path clip-rule="evenodd" d="M11.49 3.17c-.38-1.56-2.6-1.56-2.98 0a1.532 1.532 0 01-2.286.948c-1.372-.836-2.942.734-2.106 2.106.54.886.061 2.042-.947 2.287-1.561.379-1.561 2.6 0 2.978a1.532 1.532 0 01.947 2.287c-.836 1.372.734 2.942 2.106 2.106a1.532 1.532 0 012.287.947c.379 1.561 2.6 1.561 2.978 0a1.533 1.533 0 012.287-.947c1.372.836 2.942-.734 2.106-2.106a1.533 1.533 0 01.947-2.287c1.561-.379 1.561-2.6 0-2.978a1.532 1.532 0 01-.947-2.287c.836-1.372-.734-2.942-2.106-2.106a1.532 1.532 0 01-2.287-.947zM10 13a3 3 0 100-6 3 3 0 000 6z" fill-rule="evenodd" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Messages Container -->
+                <div class="flex-1 overflow-y-auto p-4 bg-gray-100" id="chat-box">
+                    <div class="welcome-message max-w-3xl mx-auto bg-white p-6 rounded-xl shadow-sm text-center">
+                        <h2 class="text-2xl font-semibold mb-2">Hello! I'm <span class="text-blue-500">{{ model_name }}</span></h2>
+                        <p class="text-gray-600">Ask me anything or start a conversation. I'm here to help!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Area - Fixed to Bottom -->
+        <div class="bg-white border-t border-gray-200" id="input-area">
+            <div class="max-w-3xl mx-auto p-4">
+                <div class="relative flex items-end gap-2">
+                    <textarea class="no-custom-scrollbar flex-1 textarea-auto-height p-3 pr-12 border border-gray-300 rounded-xl bg-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" id="user-input" oninput="adjustTextareaHeight()"
+                              onkeypress="handleKeyPress(event)"
+                              placeholder="Type your message..." rows="1"></textarea>
+                    <button class="absolute right-3 bottom-2 p-2 text-gray-500 hover:text-blue-500 transition-colors" onclick="sendMessage()">
+                        <svg class="h-5 w-5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />
+                        </svg>
+                    </button>
+                </div>
+                <p class="text-xs text-gray-500 mt-2 text-center">AI may produce inaccurate information. Verify important facts.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Sidebar Overlay -->
+    <div class="fixed inset-0 bg-black bg-opacity-50 z-40 hidden" id="mobile-sidebar-overlay" onclick="closeMobileSidebar()"></div>
+
+    <script>
+        // Toggle mobile sidebar
+        function toggleMobileSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+
+            if (sidebar.classList.contains('hidden')) {
+                // Open sidebar
+                sidebar.classList.remove('hidden');
+                sidebar.classList.add('fixed', 'z-50', 'inset-y-0', 'left-0', 'w-72');
+                overlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            } else {
+                // Close sidebar
+                closeMobileSidebar();
+            }
+        }
+
+        function closeMobileSidebar() {
+            const sidebar = document.querySelector('.sidebar');
+            const overlay = document.getElementById('mobile-sidebar-overlay');
+
+            sidebar.classList.add('hidden');
+            sidebar.classList.remove('fixed', 'z-50', 'inset-y-0', 'left-0', 'w-72');
+            overlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+
+        // Adjust textarea height
+        function adjustTextareaHeight() {
+            const textarea = document.getElementById('user-input');
+            textarea.style.height = 'auto';
+            textarea.style.height = `${Math.min(textarea.scrollHeight, 200)}px`;
+        }
+
+        // Send message function
+        async function sendMessage() {
+            const input = document.getElementById('user-input');
+            const message = input.value.trim();
+
+            if (!message) return;
+
+            input.value = '';
+            input.style.height = '48px';
+
+            const chatBox = document.getElementById('chat-box');
+
+            // Add user message
+            addMessage(message, 'user');
+
+            // Create AI message container
+            const aiMessage = document.createElement('div');
+            aiMessage.className = 'message ai-message max-w-3xl mx-auto my-4 bg-white p-4 rounded-xl shadow-sm';
+
+            const messageContent = document.createElement('pre');
+            messageContent.className = 'text-wrap';
+            aiMessage.appendChild(messageContent);
+            chatBox.appendChild(aiMessage);
+
+            // Add typing indicator
+            const typingIndicator = document.createElement('div');
+            typingIndicator.className = 'typing-indicator max-w-3xl mx-auto my-4 text-sm text-gray-500 italic';
+            typingIndicator.textContent = 'AI is typing';
+            chatBox.appendChild(typingIndicator);
+
+            // Scroll to bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+
+            // Prepare request data
+            const requestData = {
+                prompt: message,
+                memory_k: parseInt(document.getElementById('memory_k-value').textContent),
+                max_length: parseInt(document.getElementById('max_length-value').textContent),
+                temperature: parseFloat(document.getElementById('temperature-value').textContent),
+                top_p: parseFloat(document.getElementById('top_p-value').textContent),
+                system_prompt: document.getElementById('system-prompt').value,
+            };
+
+            const authorization_token = document.getElementById('authorization-token').value
+
+            // Currently /api/generate is the endpoint
+            try {
+                const response = await fetch('/api/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${authorization_token}`,
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(requestData)
+                });
+
+                if (!response.ok) throw new Error(`Error: ${response.statusText}`);
+
+                const reader = response.body.getReader();
+                const decoder = new TextDecoder();
+                let fullResponse = '';
+
+                while (true) {
+                    const { done, value } = await reader.read();
+                    if (done) break;
+
+                    const chunks = decoder.decode(value, { stream: true }).split('\n');
+
+                    for (let chunk of chunks) {
+                        if (chunk.startsWith('data: ')) {
+                            try {
+                                fullResponse += JSON.parse(chunk.replace('data: ', '')).chunk;
+                                messageContent.innerHTML = beautifyText(fullResponse);
+
+                                // Scroll to bottom if user hasn't scrolled up
+                                if (isUserAtBottom(chatBox)) {
+                                    chatBox.scrollTop = chatBox.scrollHeight;
+                                }
+                            } catch (e) {
+                                console.error('JSON parse error:', e);
+                            }
+                        }
+                    }
+                }
+            } catch (error) {
+                    console.error('Error during streaming:', error);
+
+                    // Display the error message from the endpoint, if available
+                    if (error instanceof Response) {
+                        const errorText = await error.text();
+                        messageContent.textContent = `${errorText}`;
+                    } else {
+                        messageContent.textContent = `${error.message || 'An unknown error occurred.'}`;
+                    }
+                } finally {
+                // Remove typing indicator
+                chatBox.removeChild(typingIndicator);
+
+                // Add timestamp
+                const timestamp = new Date().toLocaleString('en-US', {
+                    hour: 'numeric',
+                    minute: 'numeric',
+                    hour12: true
+                });
+
+                const timestampElement = document.createElement('div');
+                timestampElement.className = 'text-xs text-gray-500 mt-2 text-left';
+                timestampElement.textContent = timestamp;
+                aiMessage.appendChild(timestampElement);
+
+                // Scroll to bottom
+                chatBox.scrollTop = chatBox.scrollHeight;
+            }
+        }
+
+        // Add message to chat
+        function addMessage(content, sender) {
+            const chatBox = document.getElementById('chat-box');
+            const messageElement = document.createElement('div');
+
+            messageElement.className = `message ${sender}-message max-w-3xl mx-auto my-4 p-4 rounded-xl shadow-sm ${
+                sender === 'user' ? 'bg-amber-200 ml-auto' : 'bg-zinc-200'
+            }`;
+
+            const contentElement = document.createElement('pre');
+            contentElement.className = 'text-wrap';
+            contentElement.textContent = content;
+            messageElement.appendChild(contentElement);
+
+            const timestamp = new Date().toLocaleString('en-US', {
+                hour: 'numeric',
+                minute: 'numeric',
+                hour12: true
+            });
+
+            const timestampElement = document.createElement('div');
+            timestampElement.className = 'text-xs text-gray-500 mt-2 text-left';
+            timestampElement.textContent = timestamp;
+            messageElement.appendChild(timestampElement);
+
+            chatBox.appendChild(messageElement);
+
+            // Remove welcome message only when first AI message is added
+            if (sender === 'ai') {
+                const welcomeMessage = chatBox.querySelector('.welcome-message');
+                if (welcomeMessage) {
+                    welcomeMessage.remove();
+                }
+            }
+
+            // Scroll to bottom
+            chatBox.scrollTop = chatBox.scrollHeight;
+        }
+
+        // Check if user is at bottom of chat
+        function isUserAtBottom(element) {
+            return element.scrollTop + element.clientHeight >= element.scrollHeight - 10;
+        }
+
+        // Beautify text
+        function beautifyText(text) {
+                let formattedText = marked.parse(text).trim();
+
+                formattedText = formattedText.replace(/<think>([\s\S]*?)<\/think>/g,
+                    '<div class="think-style">$1</div>');
+
+                formattedText = formattedText.replace(/<pre><code class="language-(\w+)">([\s\S]*?)<\/code><\/pre>/g,
+                    (match, lang, code) => {
+                        const decodedCode = he.decode(code);
+                        if (!hljs.getLanguage(lang)) {
+                            return `<pre><code class="language-plaintext">${decodedCode}</code></pre>`;
+                        }
+                        return `<pre><code class="language-${lang}">${hljs.highlight(decodedCode, { language: lang }).value}</code></pre>`;
+                });
+
+                return formattedText.trim();
+            }
+
+        // Handle Enter key press
+        function handleKeyPress(event) {
+            if (event.key === 'Enter' && !event.shiftKey) {
+                event.preventDefault();
+                sendMessage();
+            }
+        }
+
+        // Update slider values
+        function updateSliderValue(id, value) {
+            document.getElementById(`${id}-value`).textContent = value;
+            document.getElementById(`display-${id}`).textContent = value;
+        }
+
+        // Export chat
+        function exportChat() {
+            const chatBox = document.getElementById('chat-box');
+            const messages = Array.from(chatBox.children)
+                .filter(el => el.classList.contains('message'))
+                .map(el => {
+                    const sender = el.classList.contains('user-message') ? 'You' : 'AI';
+                    const content = el.querySelector('pre').textContent.trim();
+                    const timestamp = el.querySelector('.text-xs').textContent;
+                    return `${timestamp} | ${sender}: ${content}`;
+                })
+                .join('\n\n');
+
+            if (!messages) {
+                alert('No chat conversations to export!');
+                return;
+            }
+
+            const blob = new Blob([messages], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `langformers_chat_${new Date().toISOString().slice(0,10)}.txt`;
+            a.click();
+            URL.revokeObjectURL(url);
+        }
+    </script>
+</body>
+</html>
