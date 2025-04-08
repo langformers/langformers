@@ -28,6 +28,9 @@ Documentation = "https://langformers.com"
 Repository = "https://github.com/langformers/langformers"
 Issues = "https://github.com/langformers/langformers/issues"
 
+[tool.setuptools.dynamic]
+dependencies = {file = ["requirements.txt"]}
+
 [tool.setuptools.packages]
 find = {}
 
