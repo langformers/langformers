@@ -21,6 +21,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
+    "sphinx_favicon"
 ]
 
 autodoc_default_options = {
@@ -55,4 +56,11 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_logo = "_static/logo.png"
 html_css_files = ["custom.css"]
-html_favicon = "_static/favicon.ico"
+
+
+favicons = [
+   {"rel": "shortcut icon", "href": "favicon.ico"},
+   {"rel": "icon", "type": "image/svg+xml", "href": "favicon.svg"},
+   {"rel": "icon", "type": "image/png", "href": "favicon-96x96.png", "sizes": "96x96"},
+   {"rel": "apple-touch-icon", "sizes": "180x180", "href": "apple-touch-icon.png"}
+]
