@@ -7,7 +7,7 @@ To install Langformers globally, run:
 
 .. code-block:: bash
 
-   pip install langformers
+   pip install -U langformers
 
 However, it is strongly recommended to use a virtual environment for better package management.
 

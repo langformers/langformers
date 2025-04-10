@@ -45,6 +45,7 @@ Use the same pattern everywhere:
     tasks.create_generator(...)  # Chatting with LLMs
     tasks.create_labeller(...)   # Data labelling using LLMs
     tasks.create_embedder(...)   # Embeding Sentences
+    tasks.create_reranker(...)   # Reranking Sentences
     tasks.create_classifier(...) # Training a Text Classifier
     tasks.create_tokenizer()     # Training a Custom Tokenizer
     tasks.create_mlm(...)        # Pretraining an MLM
