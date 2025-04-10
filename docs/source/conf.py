@@ -32,6 +32,8 @@ autodoc_default_options = {
     "show-inheritance": True,
 }
 
+html_title = "Langformers Documentation"
+
 html_theme_options = {
     "collapse_navigation": False,
     "navigation_depth": 2,
