@@ -1,13 +1,22 @@
-Langformers
-=============
+Langformers Documentation
+===========================
 
 🚀 **Unified NLP Pipelines for Language Models**
 
 Langformers is a powerful yet user-friendly Python library designed for seamless interaction with large language models (LLMs) and masked language models (MLMs).
 
-It unifies capabilities such as conversational AI (via :doc:`chat interface <chat>` and :doc:`REST api <llm-inference>`), :doc:`MLM pretraining <pretrain-mlms>`, :doc:`text classification <train-text-classifiers>`, :doc:`sentence embedding <embed-sentences>`, :doc:`data labeling <data-labelling-llms>`, :doc:`semantic search <semantic-search>`, and :doc:`knowledge distillation <mimick-a-model>` into a single, cohesive API. Langformers is built on top of popular libraries such as Pytorch\ [#]_, Transformers\ [#]_, Ollama\ [#]_,  FastAPI\ [#]_, ensuring compatibility with modern NLP workflows.
+It unifies the following core NLP pipelines into a single, cohesive API:
 
-The library supports models from Hugging Face (🤗) and Ollama, and is optimized for performance with support for both CUDA and Apple Silicon (MPS).
+- Conversational AI (:doc:`chat interface <chat>` and :doc:`REST api <llm-inference>`)
+- :doc:`MLM pretraining <pretrain-mlms>`
+- :doc:`Text classification <train-text-classifiers>`
+- :doc:`Sentence embedding <embed-sentences>`
+- :doc:`Reranking sentences <reranker>`
+- :doc:`Data labelling <data-labelling-llms>`
+- :doc:`Semantic search <semantic-search>`
+- :doc:`Knowledge distillation <mimick-a-model>`
+
+Langformers is built on top of popular libraries such as Pytorch\ [#]_, Transformers\ [#]_, Ollama\ [#]_,  FastAPI\ [#]_, ensuring compatibility with modern NLP workflows. The library supports Hugging Face and Ollama models, and is optimized for both CUDA and Apple Silicon (MPS).
 
 .. admonition:: Installing
     :class: warning
@@ -85,6 +94,7 @@ Below are the pre-built NLP tasks available:
 
    embed-sentences
    semantic-search
+   reranker
    mimick-a-model
 
 

@@ -4,7 +4,7 @@ Langformers is a flexible and user-friendly library that unifies NLP pipelines f
 
 Why Langformers? **Chat, build, train, label, and embed — faster than ever.**
 
-Whether you're generating text, training classifiers, labelling data, embedding sentences, or building a semantic search index... the API stays consistent:
+Whether you're generating text, training classifiers, labelling data, embedding sentences, reranking sentences, or building a semantic search index... the API stays consistent:
 
 ```python
 from langformers import tasks
@@ -21,6 +21,7 @@ Use the same pattern everywhere:
 tasks.create_generator(...)  # Chatting with LLMs
 tasks.create_labeller(...)   # Data labelling using LLMs
 tasks.create_embedder(...)   # Embeding Sentences
+tasks.create_reranker(...)   # Reranking Sentences
 tasks.create_classifier(...) # Training a Text Classifier
 tasks.create_tokenizer()     # Training a Custom Tokenizer
 tasks.create_mlm(...)        # Pretraining an MLM
@@ -42,6 +43,7 @@ tasks.create_mimicker(...)   # Knowledge Distillation
 
 ### Embeddings & Search (e.g., Sentence Transformers, FAISS, Pinecone)
 - Embed Sentences
+- Rerank Sentences
 - Semantic Search
 - Mimic a Pretrained Model (Knowledge Distillation)
 
@@ -219,7 +221,32 @@ embedder = tasks.create_embedder(provider="huggingface", model_name="sentence-tr
 # Get your sentence embeddings
 embeddings = embedder.embed(["I am hungry.", "I want to eat something."])
 ```  
-  
+
+### Rerank Sentences
+Langformers also supports reranking. Reranking reorders a list of documents (or sentences/texts) based on their relevance to a given query.
+
+```python
+# Import langformers
+from langformers import tasks
+
+# Create a reranker
+reranker = tasks.create_reranker(model_type="cross_encoder", model_name="cross-encoder/ms-marco-MiniLM-L-6-v2")
+
+# Define `query` and `documents`
+query = "Where is the Mount Everest?"
+
+documents = [
+    "Mount Everest is the highest mountain in the world.",
+    "Mount Everest is in Nepal.",
+    "Where is the Mount Everest?"
+]
+
+# Get your reranked documents
+reranked_docs = reranker.rank(query=query, documents=documents)
+print(reranked_docs)
+```
+
+
 ### Semantic Search  
 Langformers can help you quickly set up a semantic search engine for vectorized text retrieval. All you need to do is specify an embedding model, the type of database (FAISS, ChromaDB, or Pinecone), and an index type (if required).
 

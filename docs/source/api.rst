@@ -145,6 +145,18 @@ HuggingFaceMLMCreator
    :show-inheritance:
 
 
+Rerankers
+------------
+
+CrossEncoder
+^^^^^^^^^^^^^^
+.. autoclass:: langformers.rerankers.CrossEncoder
+   :members:
+   :inherited-members:
+   :show-inheritance:
+
+
+
 Searchers
 ------------
 

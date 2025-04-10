@@ -35,6 +35,15 @@ autodoc_default_options = {
 html_theme_options = {
     "collapse_navigation": False,
     "navigation_depth": 2,
+    "logo_only": True
+}
+
+html_context = {
+    "display_github": True,
+    "github_user": "langformers",
+    "github_repo": "langformers",
+    "github_version": "main", 
+    "conf_py_path": "/docs/source/",
 }
 
 templates_path = ['_templates']
@@ -42,6 +51,6 @@ exclude_patterns = []
 
 html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
-html_logo = "_static/logo.svg"
+html_logo = "_static/logo.png"
 html_css_files = ["custom.css"]
-html_favicon = "_static/logo.svg"
+html_favicon = "_static/favicon.svg"

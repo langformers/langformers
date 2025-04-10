@@ -52,7 +52,7 @@ However, it is strongly recommended to use a virtual environment for better pack
 
          .. code-block:: bash
 
-            pip install langformers
+            pip install -U langformers
 
 
     .. tab:: Windows
@@ -84,7 +84,7 @@ However, it is strongly recommended to use a virtual environment for better pack
 
          .. code-block:: bash
 
-            pip install langformers
+            pip install -U langformers
 
 
     .. tab:: macOS
@@ -118,7 +118,7 @@ However, it is strongly recommended to use a virtual environment for better pack
 
          .. code-block:: bash
 
-            pip install langformers
+            pip install -U langformers
 
 
 Now you're ready to use Langformers! 🎉

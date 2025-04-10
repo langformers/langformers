@@ -6,6 +6,7 @@ from .generators import OllamaGenerator, HuggingFaceGenerator
 from .labellers import OllamaDataLabeller, HuggingFaceDataLabeller
 from .mimickers import EmbeddingMimicker
 from .searchers import FaissSearcher, ChromaDBSearcher, PineconeSearcher
+from .rerankers import CrossEncoder
 
 
 class tasks:
@@ -201,3 +202,25 @@ class tasks:
             "huggingface": HuggingFaceDataLabeller
         }
         return providers[provider](model_name, multi_label)
+    
+    @staticmethod
+    def create_reranker(model_type: str, model_name: str, **kwargs):
+        """
+        Factory method for creating a reranker.
+
+        Args:
+            model_type (str, required): The type of the reranker model. Currently supported model types: ``cross_encoder``
+            model_name (str, required): The model name from Hugging Face (e.g., "cross-encoder/ms-marco-MiniLM-L-6-v2"). Refer to this link for more models: `https://huggingface.co/models?library=sentence-transformers&pipeline_tag=text-ranking`
+            **kwargs (dict, required): Model specific keyword arguments. Keeping this as more model_type can be added.
+
+        Returns:
+            An instance of the appropriate reranker class, based on the selected model type.
+
+                - If `model_type` is "cross_encoder", an instance of `CrossEncoder` is returned.
+        """
+        models = {
+            "cross_encoder": CrossEncoder
+        }
+        if model_type not in models:
+            raise ValueError(f"Unsupported model type: {model_type}. Available model types: {list(models.keys())}")
+        return models[model_type](model_name, **kwargs)
