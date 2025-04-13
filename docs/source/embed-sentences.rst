@@ -19,8 +19,7 @@ Here's a sample code snippet to get you started:
 
 .. tip::
 
-    Sentence Transformers' embedding models are a great starting point for generating semantically
-    meaningful sentence embeddings. Refer https://sbert.net/docs/sentence_transformer/pretrained_models.html#original-models.
+    Which models to use? Refer to this Hugging Face page for the list of supported embedding models: https://huggingface.co/models?library=sentence-transformers.
 
 .. tabs::
 
