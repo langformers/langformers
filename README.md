@@ -1,6 +1,6 @@
-# Langformers
-
 [![PyPI](https://img.shields.io/pypi/v/langformers.svg)](https://pypi.org/project/langformers/) [![Downloads](https://static.pepy.tech/badge/langformers)](https://pepy.tech/project/langformers) [![Docs](https://img.shields.io/website?url=https%3A%2F%2Flangformers.com)](https://langformers.com) [![License](https://img.shields.io/github/license/langformers/langformers?color=blue)](https://github.com/langformers/langformers/blob/main/LICENSE)
+
+# Langformers
 
 Langformers is a flexible and user-friendly library that unifies NLP pipelines for both Large Language Models (LLMs) and Masked Language Models (MLMs) into one simple API.
 

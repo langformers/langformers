@@ -16,6 +16,8 @@ Fixed-size chunking
 
 This approach divides a document into fixed-size chunks.
 
+Here's a simple example of how to use the fixed-size chunker:
+
 .. code-block:: python
 
     # Import Langformers
@@ -54,6 +56,8 @@ Semantic Chunking
 --------------------
 
 Semantic chunking is a more advanced approach that uses semantic similarity to create chunks. Intially the document will be chunked into smaller pieces, and then the chunker will group them based on their semantic similarity.
+
+Here's a simple example of how to use the semantic chunker:
 
 .. code-block:: python
 
