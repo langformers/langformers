@@ -55,7 +55,7 @@ Also, instead of getting chunks as a list, you can save them to a file by provid
 Semantic Chunking
 --------------------
 
-Semantic chunking is a more advanced approach that uses semantic similarity to create chunks. Intially the document will be chunked into smaller pieces, and then the chunker will group them based on their semantic similarity.
+Semantic chunking is a more advanced approach that uses semantic similarity to create chunks\ [#]_. Intially the document will be chunked into smaller pieces, and then the chunker will group them based on their semantic similarity.
 
 Here's a simple example of how to use the semantic chunker:
 
@@ -90,3 +90,7 @@ Here's a simple example of how to use the semantic chunker:
 
         .. autofunction:: langformers.chunkers.SemanticChunker.chunk
            :no-index:
+
+**Footnotes**
+
+.. [#] Based on the concept presented by Greg Kamradt. The 5 Levels Of Text Splitting For Retrieval. https://www.youtube.com/watch?v=8OJC21T2SL4&t=1930s
