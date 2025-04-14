@@ -7,6 +7,7 @@ from .labellers import OllamaDataLabeller, HuggingFaceDataLabeller
 from .mimickers import EmbeddingMimicker
 from .searchers import FaissSearcher, ChromaDBSearcher, PineconeSearcher
 from .rerankers import CrossEncoder
+from .chunkers import FixedSizeChunker, SemanticChunker
 
 
 class tasks:
@@ -224,3 +225,26 @@ class tasks:
         if model_type not in models:
             raise ValueError(f"Unsupported model type: {model_type}. Available model types: {list(models.keys())}")
         return models[model_type](model_name, **kwargs)
+    
+    @staticmethod
+    def create_chunker(strategy: str, **kwargs):
+        """
+        Factory method for creating a chunker that splits a document into smaller pieces (chunks).
+
+        Args:
+            strategy (str, required): The chunking strategy. Currently supported startegies: ``fixed_size``, ``semantic``.
+            **kwargs (str, required): Chunking strategy specific keyword arguments.
+
+        Returns:
+            An instance of the appropriate chunker class, based on the selected strategy.
+
+                - If `strategy` is "fixed_size", an instance of `FixedSizeChunker` is returned.
+                - If `strategy` is "semantic", an instance of `SemanticChunker` is returned.
+        """
+        strategies = {
+            "fixed_size": FixedSizeChunker,
+            "semantic": SemanticChunker
+        }
+        if strategy not in strategies:
+            raise ValueError(f"Unsupported chunking strategy: {strategy}. Available chunking strategy: {list(strategies.keys())}")
+        return strategies[strategy](**kwargs)

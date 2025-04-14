@@ -15,6 +15,7 @@ It unifies the following core NLP pipelines into a single, cohesive API:
 - :doc:`Data labelling <data-labelling-llms>`
 - :doc:`Semantic search <semantic-search>`
 - :doc:`Knowledge distillation <mimick-a-model>`
+- :doc:`Chunking for LLMs <chunking-for-llms>`
 
 Langformers is built on top of popular libraries such as Pytorch\ [#]_, Transformers\ [#]_, Ollama\ [#]_,  FastAPI\ [#]_, ensuring compatibility with modern NLP workflows. The library supports Hugging Face and Ollama models, and is optimized for both CUDA and Apple Silicon (MPS).
 
@@ -51,6 +52,7 @@ Use the same pattern everywhere:
     tasks.create_mlm(...)        # Pretraining an MLM
     tasks.create_searcher(...)   # Vector Database search
     tasks.create_mimicker(...)   # Knowledge Distillation
+    tasks.create_chunker(...)    # Chunking for LLMs
 
 
 Tasks in Langformers
@@ -80,6 +82,7 @@ Below are the pre-built NLP tasks available:
    chat
    llm-inference
    data-labelling-llms
+   chunking-for-llms
 
 .. toctree::
    :maxdepth: 2

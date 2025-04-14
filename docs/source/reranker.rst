@@ -50,19 +50,15 @@ Here's a sample code snippet to get you started:
         .. autofunction:: langformers.tasks.create_reranker
            :no-index:
 
-        Model type-specific **kwargs**
-
-        **Cross Encoder**
+        **kwargs** for **Cross Encoder** model type:
 
         .. autoclass:: langformers.rerankers.CrossEncoder
-           :exclude-members: 
+           :exclude-members: rank
            :inherited-members:
            :show-inheritance:
            :no-index:
 
     .. tab:: rank()
 
-        ``rank()`` takes the following parameters:
-
-        - ``query`` (str, required): Query. E.g., "What is the capital of France?"
-        - ``documents`` (List(str), required): List of documents to be reranked. List of documents. E.g., ["Paris is the capital of France.", "Berlin is the capital of Germany."]
+        .. autofunction:: langformers.rerankers.CrossEncoder.rank
+           :no-index:

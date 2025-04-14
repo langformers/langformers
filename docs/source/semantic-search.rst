@@ -70,9 +70,7 @@ To load an existing database, initialize a searcher with the following parameter
         .. autofunction:: langformers.tasks.create_searcher
            :no-index:
 
-        Database-specific **kwargs**
-
-        **FAISS**
+        **kwargs** for **FAISS** database:
 
         .. autoclass:: langformers.searchers.FaissSearcher
            :exclude-members: create_faiss_index, init_db, load_or_create_index, close, get_text_by_id, save_index, train_index, add, count, query, get_by_id
@@ -80,7 +78,7 @@ To load an existing database, initialize a searcher with the following parameter
            :show-inheritance:
            :no-index:
 
-        **ChromaDB**
+        **kwargs** for **ChromaDB** database:
 
         .. autoclass:: langformers.searchers.ChromaDBSearcher
            :exclude-members: close, add, count, query, initialize_collection
@@ -88,7 +86,7 @@ To load an existing database, initialize a searcher with the following parameter
            :show-inheritance:
            :no-index:
 
-        **Pinecone**
+        **kwargs** for **Pinecone** database:
 
         .. autoclass:: langformers.searchers.PineconeSearcher
            :exclude-members: add, count, query, initialize_index
