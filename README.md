@@ -36,7 +36,7 @@ tasks.create_chunker(...)     # Chunking for LLMs
 Langformers can be installed using `pip`.
 
 ```bash
-pip  install  -U  langformers
+pip install -U langformers
 ```
 
 ## Supported Tasks
@@ -45,23 +45,23 @@ Below are the pre-built NLP tasks available in Langformers. Each link points to 
 
 ### Generative LLMs (e.g., Llama, Mistral, DeepSeek)
 
-- Seamless Chat with LLMs
-- LLM Inference via API
-- Data Labelling with LLMs
-- Chunking
+- [Seamless Chat with LLMs](https://langformers.com/chat.html)
+- [LLM Inference via API](https://langformers.com/llm-inference.html)
+- [Data Labelling with LLMs](https://langformers.com/data-labelling-llms.html)
+- [Chunking](https://langformers.com/chunking-for-llms.html)
 
 ### Masked Language Models (e.g., RoBERTa)
 
-- Train Text Classifiers
-- Pretrain MLMs from scratch
-- Continue Pretraining MLMs on custom data
+- [Train Text Classifiers](https://langformers.com/train-text-classifiers.html)
+- [Pretrain MLMs from scratch](https://langformers.com/pretrain-mlms.html)
+- [Continue Pretraining MLMs on custom data](https://langformers.com/further-pretrain-mlms.html)
 
 ### Embeddings & Search (e.g., Sentence Transformers, FAISS, Pinecone)
 
-- Embed Sentences
-- Semantic Search
-- Rerank Sentences
-- Mimic a Pretrained Model (Knowledge Distillation)
+- [Embed Sentences](https://langformers.com/embed-sentences.html)
+- [Semantic Search](https://langformers.com/semantic-search.html)
+- [Rerank Sentences](https://langformers.com/reranker.html)
+- [Mimic a Pretrained Model (Knowledge Distillation)](https://langformers.com/mimick-a-model.html)
 
 ## Documentation
 
@@ -73,7 +73,7 @@ Langformers is released under the [Apache License 2.0](https://www.apache.org/li
 
 ## Contributing
 
-We welcome contributions! Please see our contribution guidelines (at https://langformers.com/contributing.html) for details.
+We welcome contributions! Please see our [contribution guidelines](https://langformers.com/contributing.html) for details.
 
  ---
 Built with ❤️ for the future of language AI.
