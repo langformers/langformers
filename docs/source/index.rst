@@ -3,9 +3,7 @@ Langformers Documentation
 
 🚀 **Unified NLP Pipelines for Language Models**
 
-Langformers is a powerful yet user-friendly Python library designed for seamless interaction with large language models (LLMs) and masked language models (MLMs).
-
-It unifies the following core NLP pipelines into a single, cohesive API:
+Langformers is a powerful yet user-friendly Python library designed for seamless interaction with large language models (LLMs) and masked language models (MLMs). It unifies the following core NLP pipelines into a single, cohesive API:
 
 - Conversational AI (:doc:`chat interface <chat>` and :doc:`REST api <llm-inference>`)
 - :doc:`MLM pretraining <pretrain-mlms>`
@@ -28,31 +26,19 @@ Langformers is built on top of popular libraries such as Pytorch\ [#]_, Transfor
 
        pip install -U langformers
 
-Whether you're generating text, training classifiers, labelling data, embedding sentences, or building a semantic search index... the API stays consistent:
+.. admonition:: What makes Langformers special?
+   :class: note
 
-.. code-block:: python
+   Whether you're generating text, training classifiers, labelling data, embedding sentences, or building a semantic search index... the API stays consistent:
 
-    from langformers import tasks
+   .. code-block:: python
 
-    component = tasks.create_<something>(...)
-    component.<do_something>()
+      from langformers import tasks
 
-No need to juggle different frameworks — Langformers wraps Hugging Face Transformers, SentenceTransformers, Ollama, FAISS, ChromaDB, Pinecone, and more under one unified interface.
+      component = tasks.create_<something>(...)
+      component.<do_something>()
 
-Use the same pattern everywhere:
-
-.. code-block:: python
-
-    tasks.create_generator(...)  # Chatting with LLMs
-    tasks.create_labeller(...)   # Data labelling using LLMs
-    tasks.create_embedder(...)   # Embeding Sentences
-    tasks.create_reranker(...)   # Reranking Sentences
-    tasks.create_classifier(...) # Training a Text Classifier
-    tasks.create_tokenizer()     # Training a Custom Tokenizer
-    tasks.create_mlm(...)        # Pretraining an MLM
-    tasks.create_searcher(...)   # Vector Database search
-    tasks.create_mimicker(...)   # Knowledge Distillation
-    tasks.create_chunker(...)    # Chunking for LLMs
+   No need to juggle different frameworks — Langformers brings Hugging Face Transformers, Ollama, FAISS, ChromaDB, Pinecone, and more under one unified interface.
 
 
 Tasks in Langformers
@@ -68,9 +54,26 @@ Below are the pre-built NLP tasks available:
     :class: non-clickable
 
 
+Citing
+--------
+If you find Langformers useful in your research or projects, feel free to cite the following publication:
+
+
+.. code-block:: bibtex
+
+   @article{lamsal2025langformers,
+      title={Langformers: Unified NLP Pipelines for Language Models}, 
+      author={Rabindra Lamsal and Maria Rodriguez Read and Shanika Karunasekera},
+      year={2025},
+      journal={arXiv preprint arXiv:2504.09170},
+      url={https://arxiv.org/abs/2504.09170}
+   }
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Getting Started
+   :hidden:
 
    installation
    dependencies
@@ -78,6 +81,7 @@ Below are the pre-built NLP tasks available:
 .. toctree::
    :maxdepth: 2
    :caption: LLMs
+   :hidden:
 
    chat
    llm-inference
@@ -87,6 +91,7 @@ Below are the pre-built NLP tasks available:
 .. toctree::
    :maxdepth: 2
    :caption: MLMs
+   :hidden:
 
    train-text-classifiers
    pretrain-mlms
@@ -95,6 +100,7 @@ Below are the pre-built NLP tasks available:
 .. toctree::
    :maxdepth: 2
    :caption: Embeddings
+   :hidden:
 
    embed-sentences
    semantic-search
@@ -105,12 +111,14 @@ Below are the pre-built NLP tasks available:
 .. toctree::
    :maxdepth: 1
    :caption: Library Reference
+   :hidden:
 
    api
 
 .. toctree::
    :maxdepth: 1
    :caption: Misc
+   :hidden:
 
    license
    contributing
