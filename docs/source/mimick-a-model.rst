@@ -43,7 +43,7 @@ Here's a sample code for you to get started:
 
     # Define the architecture of your student model
     student_config = {
-        "max_position_embeddings": 130,
+        "max_position_embeddings": 130,              # tokenizer's max_length will be -2 this value
         "num_attention_heads":8,
         "num_hidden_layers": 8,
         "hidden_size": 128,

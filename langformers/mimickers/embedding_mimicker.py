@@ -7,14 +7,16 @@ import torch.optim as optim
 from tqdm import tqdm
 from langformers.commons.device import device
 import os
-from langformers.commons import mean_pooling, print_message
+from langformers.commons import mean_pooling, print_message, get_name
 from langformers.mimickers.customs import CustomMimickerDataset
+from typing import Optional, Union
+
 
 
 @dataclass
 class StudentConfig:
     """
-    Default configuration for the student model.
+    Configuration parameters for the student model.
 
     Args:
         max_position_embeddings (int, required): Maximum sequence length for input to the student model.
@@ -45,7 +47,7 @@ class TrainingConfig:
     num_train_epochs: int
     learning_rate: float
     batch_size: int
-    dataset_path: str or dict
+    dataset_path: Union[list, str]
     logging_steps: int
 
 
@@ -57,8 +59,8 @@ class EmbeddingMimicker:
     teacher model. The student model learns to match the output embeddings of the teacher model by
     minimizing the mean squared error (MSE) loss between the teacher's and student's embeddings.
     """
-    def __init__(self, teacher_model: str, student_config: dict,
-                 training_config: dict):
+    def __init__(self, teacher_model: str, student_config: Optional[dict] = None,
+                 training_config: Optional[dict] = None):
         """
         Loads the teacher model and initializes the student model with provided configurations. Prepares dataset and dataloader required for the training.
 
@@ -68,6 +70,7 @@ class EmbeddingMimicker:
             training_config (dict, required): Configuration for training. Refer to :py:class:`langformers.mimickers.embedding_mimicker.TrainingConfig` for key-value arguments.
         """
         self.teacher_model_name = teacher_model
+        self.init_student_config = StudentConfig(**student_config)
 
         try:
             self.teacher_model = AutoModel.from_pretrained(self.teacher_model_name).to(device)
@@ -78,16 +81,17 @@ class EmbeddingMimicker:
 
         try:
             vocab_size = self.teacher_model.config.vocab_size
-            student_config['vocab_size'] = vocab_size
-            self.student_config = RobertaConfig(**student_config)
+            
+            setattr(self.init_student_config, 'vocab_size', vocab_size)
+            self.student_config = RobertaConfig(**self.init_student_config.__dict__)
         except Exception as e:
             raise ValueError(f"Error initializing student configuration: {e}")
-
+        
         try:
             self.training_config = TrainingConfig(**training_config)
         except Exception as e:
             raise ValueError(f"Error initializing training configuration: {e}")
-
+        
         self.student_model = RobertaModel(config=self.student_config).to(device)
         print_message("Student model is initialized.")
 
@@ -95,8 +99,9 @@ class EmbeddingMimicker:
                                        output_dim=self.student_config.hidden_size).to(device)
 
         try:
+            self.max_length_for_tokenization = self.init_student_config.max_position_embeddings - 2
             self.dataset = CustomMimickerDataset(dataset_path=self.training_config.dataset_path, tokenizer=self.tokenizer,
-                                                max_length=self.student_config.max_position_embeddings)
+                                                max_length=self.max_length_for_tokenization)
 
             print_message("Dataset loaded.")
 
@@ -114,11 +119,9 @@ class EmbeddingMimicker:
         Starts the training.
         """
         try:
-            print_message("Training started.")
             train_model(
                 self.student_model, self.teacher_model, self.tokenizer, self.downsampler, self.dataloader, self.optimizer,
-                epochs=self.training_config.num_train_epochs, log_steps=self.training_config.logging_steps
-            )
+                epochs=self.training_config.num_train_epochs, log_steps=self.training_config.logging_steps, max_length_for_tokenization=self.max_length_for_tokenization)
 
             print_message("Training finished. Final model saved in the 'best_model' directory.")
         except Exception as e:
@@ -135,7 +138,7 @@ class Downsampler(nn.Module):
         return self.linear(x)
 
 
-def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader, optimizer, epochs, log_steps):
+def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader, optimizer, epochs, log_steps, max_length_for_tokenization):
     """
     Trains the student model to mimic the teacher model's embeddings.
 
@@ -145,6 +148,13 @@ def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader
     Notes:
         - At the end of the training, saves the best performing model in the 'best_model' directory.
     """
+    run_name = get_name("mimicker")
+    os.makedirs(run_name, exist_ok=True)
+    print_message(f"Training started. Checkpoints will be saved in '{run_name}/best_model'.")
+
+    tokenizer.model_max_length = max_length_for_tokenization
+    tokenizer.save_pretrained(f"{run_name}/best_model")
+    
     mse_loss = nn.MSELoss()
     scaler = torch.cuda.amp.GradScaler() if device.type == 'cuda' else None
 
@@ -191,12 +201,8 @@ def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader
                     avg_loss = epoch_loss / (batch_idx + 1)
 
                     if avg_loss < best_loss:
-                        best_loss = avg_loss
-                        os.makedirs('best_model', exist_ok=True)
-                        student_model.save_pretrained('best_model')
-                        tokenizer.save_pretrained('best_model')
-                        print_message(
-                            f"Epoch: {epoch + 1}, Steps: {batch_idx + 1}, Loss: {best_loss:.4f}. Loss improved. Model "
-                            f"checkpoint saved.")
+                        best_loss = avg_loss                        
+                        student_model.save_pretrained(f"{run_name}/best_model")
+                        print_message(f"Epoch: {epoch + 1}, Training steps: {batch_idx + 1}, Loss: {best_loss:.4f}")
         except Exception as e:
             raise RuntimeError(f"Error during epoch {epoch + 1}: {e}")

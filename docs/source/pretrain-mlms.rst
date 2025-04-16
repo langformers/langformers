@@ -72,7 +72,7 @@ With the tokenizer and dataset ready, initialize the MLM model and start trainin
    # Define model architecture
    model_config = {
        "vocab_size": 50_265,              # Size of the vocabulary (must match tokenizer's `vocab_size`)
-       "max_position_embeddings": 512,    # Maximum sequence length (must match tokenizer's `max_length`)
+       "max_position_embeddings": 514,    # !imp Maximum sequence length (tokenizer's `max_length` + 2)
        "num_attention_heads": 12,         # Number of attention heads
        "num_hidden_layers": 12,           # Number of hidden layers
        "hidden_size": 768,                # Size of the hidden layers
