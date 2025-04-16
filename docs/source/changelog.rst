@@ -1,10 +1,21 @@
 Changelog
 ===========
 
-All notable changes to this project are documented here.
-
-The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
+All notable changes to this project are documented here. The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
+
+v0.3.1 (2024-04-16)
+---------------------
+
+Changed
+^^^^^^^
+- Fixed a "CUDA error" in the mimicking pipeline which was caused due to incorrect use of tokenizer's max_length and model's max_position_embeddings. CPU and Apple Silicon devices did not have this issue.
+- Documentation updated.
+
+Added
+^^^^^^
+- Precision and Recall metrics (macro and weighted) added to classification pipleine.
+
 
 v0.3.0 (2024-04-14)
 ---------------------

@@ -22,4 +22,3 @@ Langformers is built with ❤️ around the following widely adopted python libr
 - colorama
 - tensorboard
 - requests
-- bitsandbytes

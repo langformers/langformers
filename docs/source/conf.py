@@ -38,7 +38,7 @@ html_title = "Langformers Documentation"
 html_theme_options = {
     "collapse_navigation": False,
     "navigation_depth": 2,
-    "logo_only": True
+    "logo_only": True,
 }
 
 html_context = {
