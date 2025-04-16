@@ -150,7 +150,7 @@ def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader
     """
     run_name = get_name("mimicker")
     os.makedirs(run_name, exist_ok=True)
-    print_message(f"Training started. Checkpoints will be saved in '{run_name}/best_model'.")
+    print_message(f"Training has started. At every logging step, if the training loss improves, a checkpoint will be saved in '{run_name}/best_model'.")
 
     tokenizer.model_max_length = max_length_for_tokenization
     tokenizer.save_pretrained(f"{run_name}/best_model")
