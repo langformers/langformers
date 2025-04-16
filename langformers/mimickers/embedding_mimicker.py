@@ -150,13 +150,13 @@ def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader
     """
     run_name = get_name("mimicker")
     os.makedirs(run_name, exist_ok=True)
-    print_message(f"Training has started. At every logging step, if the training loss improves, a checkpoint will be saved in '{run_name}/best_model'.")
+    print_message(f"Training started. Every logging step, if the training loss improves, a checkpoint will be saved in '{run_name}/best_model'.")
 
     tokenizer.model_max_length = max_length_for_tokenization
     tokenizer.save_pretrained(f"{run_name}/best_model")
     
     mse_loss = nn.MSELoss()
-    scaler = torch.cuda.amp.GradScaler() if device.type == 'cuda' else None
+    scaler = torch.amp.GradScaler() if device.type == 'cuda' else None
 
     student_model.train()
     teacher_model.eval()
@@ -177,7 +177,7 @@ def train_model(student_model, teacher_model, tokenizer, downsampler, dataloader
                     teacher_embedding_down_sampled = downsampler(teacher_embeddings)
 
                 if device.type == 'cuda':
-                    with torch.cuda.amp.autocast():
+                    with torch.amp.autocast(device_type='cuda'):
                         student_outputs = student_model(input_ids=input_ids, attention_mask=attention_mask)
                         student_embedding = mean_pooling(student_outputs, attention_mask)
                         loss = mse_loss(student_embedding, teacher_embedding_down_sampled)
