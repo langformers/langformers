@@ -12,7 +12,7 @@ from sklearn.preprocessing import LabelEncoder
 from sklearn.utils.class_weight import compute_class_weight
 import numpy as np
 import torch
-from sklearn.metrics import f1_score
+from sklearn.metrics import f1_score, recall_score, precision_score
 
 
 @dataclass
@@ -141,7 +141,11 @@ def compute_metrics(pred):
     """Returns what evaluation metrics to be used during fine-tuning of an MLM."""
     labels = pred.label_ids
     preds = pred.predictions.argmax(-1)
-    return {"f1_macro": f1_score(labels, preds, average="macro"),
+    return {"precision_macro": precision_score(labels, preds, average="macro"),
+            "precision_weighted": precision_score(labels, preds, average="weighted"),
+            "recall_macro": recall_score(labels, preds, average='macro'),
+            "recall_weighted": recall_score(labels, preds, average='weighted'),
+            "f1_macro": f1_score(labels, preds, average="macro"),
             "f1_weighted": f1_score(labels, preds, average="weighted"), }
 
 

@@ -19,6 +19,7 @@ Here's a sample code to getting started.
         "report_to": ['tensorboard'],
         "logging_steps": 20,
         "save_steps": 20,
+        "early_stopping_patience": 5,
         # ...
     }
 
