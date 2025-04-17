@@ -39,6 +39,18 @@ Langformers can be installed using `pip`.
 pip install -U langformers
 ```
 
+This installs the latest version with [core dependencies](https://langformers.com/dependencies.html).
+
+### Optional Dependencies
+
+Langformers includes optional integrations you can install depending on your use case:
+
+- For **FAISS** support: ``pip install -U langformers[faiss]``
+- For **ChromaDB** support: ``pip install -U langformers[chromadb]``
+- For **Pinecone** support: ``pip install -U langformers[pinecone]``
+
+- To install **all optional features**: ``pip install -U langformers[all]``
+
 ## Supported Tasks
 
 Below are the pre-built NLP tasks available in Langformers. Each link points to an example in Langformer's documentation to help you get started quickly.
