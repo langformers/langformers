@@ -10,14 +10,12 @@ authors = [
 ]
 description = "🚀 Unified NLP Pipelines for Language Models"
 readme = "README.md"
-requires-python = ">=3.9"
+requires-python = ">=3.10"
 license = "Apache-2.0"
 
 classifiers = [
     "Programming Language :: Python :: 3",
-    "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
-    "Programming Language :: Python :: 3.11",
     "Operating System :: OS Independent",
     "Topic :: Scientific/Engineering :: Artificial Intelligence",
 ]
@@ -31,6 +29,12 @@ Issues = "https://github.com/langformers/langformers/issues"
 [tool.setuptools.dynamic]
 dependencies = {file = ["requirements.txt"]}
 
+[project.optional-dependencies]
+faiss = ["faiss-cpu"]
+chromadb = ["chromadb"]
+pinecone = ["pinecone-client"]
+all = ["faiss-cpu", "chromadb", "pinecone"]
+
 [tool.setuptools.packages]
 find = {}
 
@@ -40,4 +44,4 @@ find = {}
 
 [tool.setuptools_scm]
 write_to = "langformers/_version.py"
-fallback_version = "0.1.0"
+fallback_version = "0.4.0"

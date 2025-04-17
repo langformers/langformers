@@ -18,10 +18,10 @@ Here’s a sample code snippet to get you started:
     For other vector databases:
 
     ChromaDB
-    searcher = llms.create_searcher(embedder="sentence-transformers/all-MiniLM-L12-v2", database="chromadb")
+    searcher = tasks.create_searcher(embedder="sentence-transformers/all-MiniLM-L12-v2", database="chromadb")
 
     Pinecone
-    searcher = llms.create_searcher(embedder="sentence-transformers/all-MiniLM-L12-v2", database="pinecone", api_key="your-api-key-here")
+    searcher = tasks.create_searcher(embedder="sentence-transformers/all-MiniLM-L12-v2", database="pinecone", api_key="your-api-key-here")
     '''
 
     # Sentences to add in the vector database

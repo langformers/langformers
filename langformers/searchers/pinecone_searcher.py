@@ -4,7 +4,7 @@ from transformers import AutoConfig
 from langformers.embedders import HuggingFaceEmbedder
 import uuid
 import os
-from pinecone import Pinecone, ServerlessSpec
+import importlib
 
 
 class PineconeSearcher:
@@ -34,6 +34,11 @@ class PineconeSearcher:
                                         'dimension': self.dimension  # embedding model's output dimension.
                                         }
         """
+        try:
+            pinecone = importlib.import_module("pinecone")
+        except ImportError:
+            raise ImportError("Pinecone is not installed. Please install it using 'pip install langformers[pinecone]'.")
+
         self.index = None
         if embedder is None:
             raise ValueError("An embedding model must be provided.")
@@ -45,7 +50,7 @@ class PineconeSearcher:
                 "or through PINECONE_API_KEY environment variable"
             )
 
-        self.pc = Pinecone(api_key=self.api_key)
+        self.pc = pinecone.Pinecone(api_key=self.api_key)
 
         self.model_name = embedder
         self.config = AutoConfig.from_pretrained(self.model_name)
@@ -67,6 +72,7 @@ class PineconeSearcher:
 
     def initialize_index(self):
         try:
+            pinecone = importlib.import_module("pinecone")
             existing_indexes = self.pc.list_indexes()
             index_names = [index.name for index in existing_indexes] if hasattr(existing_indexes,
                                                                                 'names') else existing_indexes
@@ -76,7 +82,7 @@ class PineconeSearcher:
                     name=self.index_name,
                     dimension=self.index_parameters['dimension'],
                     metric=self.index_parameters['metric'],
-                    spec=ServerlessSpec(
+                    spec=pinecone.ServerlessSpec(
                         cloud=self.index_parameters['cloud'],
                         region=self.index_parameters['region']
                     )

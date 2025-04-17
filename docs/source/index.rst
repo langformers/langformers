@@ -26,6 +26,8 @@ Langformers is built on top of popular libraries such as Pytorch\ [#]_, Transfor
 
        pip install -U langformers
 
+    Requires **Python 3.10+**. For more details, check out the :doc:`installation guide <installation>`. 
+
 .. admonition:: What makes Langformers special?
    :class: note
 
@@ -117,12 +119,12 @@ If you find Langformers useful in your research or projects, feel free to cite t
 
 .. toctree::
    :maxdepth: 1
-   :caption: Misc
+   :caption: Development
    :hidden:
 
+   changelog
    license
    contributing
-   changelog
 
 **Footnotes**
 

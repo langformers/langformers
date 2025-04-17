@@ -6,7 +6,7 @@ from langformers.commons import get_name, print_message
 from transformers import AutoConfig
 from langformers.embedders import HuggingFaceEmbedder
 import json
-import faiss
+import importlib
 
 
 class FaissSearcher:
@@ -35,6 +35,11 @@ class FaissSearcher:
 
                     index_parameters = { "m": 32, "efConstruction": 40 }
         """
+        try:
+            self.faiss = importlib.import_module("faiss")
+        except ImportError:
+            raise ImportError("FAISS is not installed. Please install it using 'pip install langformers[faiss]'.")
+
         self.index = None
         if embedder is None:
             raise ValueError("An embedding model must be provided.")
@@ -83,7 +88,7 @@ class FaissSearcher:
     def load_or_create_index(self):
         """Loads an existing FAISS index from file or creates a new one."""
         if os.path.exists(self.index_file):
-            self.index = faiss.read_index(self.index_file)
+            self.index = self.faiss.read_index(self.index_file)
             print_message(f"Loaded existing FAISS index '{self.index_file}' with '{self.index_type}' search from '{self.output_dir}'.")
         else:
             self.create_faiss_index()
@@ -92,9 +97,9 @@ class FaissSearcher:
     def create_faiss_index(self):
         """Creates a new FAISS index based on configuration."""
         if self.index_type == "FLAT":
-            self.index = faiss.IndexFlatL2(self.dimension)
+            self.index = self.IndexFlatL2(self.dimension)
         elif self.index_type == "HNSW":
-            self.index = faiss.IndexHNSWFlat(
+            self.index = self.faiss.IndexHNSWFlat(
                 self.dimension,
                 self.index_parameters["m"]
             )
@@ -220,7 +225,7 @@ class FaissSearcher:
 
     def save_index(self):
         """Saves the FAISS index to disk."""
-        faiss.write_index(self.index, self.index_file)
+        self.faiss.write_index(self.index, self.index_file)
 
     def count(self):
         """

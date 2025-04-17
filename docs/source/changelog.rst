@@ -4,6 +4,16 @@ Changelog
 All notable changes to this project are documented here. The format is based on `Keep a Changelog <https://keepachangelog.com/en/1.0.0/>`_,
 and this project adheres to `Semantic Versioning <https://semver.org/spec/v2.0.0.html>`_.
 
+v0.4.0 (2024-04-17)
+---------------------
+
+Changed
+^^^^^^^^^
+- Langformers now requires Python 3.10 or higher.
+- Made the dependencies in the semantic search pipleines optional. Previously, FAISS, ChromaDB and Pinecone were required to install Langformers.
+- Documentation updated.
+
+
 v0.3.1 (2024-04-16)
 ---------------------
 

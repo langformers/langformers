@@ -3,7 +3,8 @@ from transformers import AutoConfig
 from langformers.embedders import HuggingFaceEmbedder
 import uuid
 from langformers.commons import get_name, print_message
-import chromadb
+import importlib
+
 
 
 class ChromaDBSearcher:
@@ -23,6 +24,11 @@ class ChromaDBSearcher:
             db_path (Optional[str], default=None): Path to the ChromaDB database. If None, a default name is generated.
             collection_name (Optional[str], default="my_collection"): Name of the ChromaDB collection.
         """
+        try:
+            chromadb = importlib.import_module("chromadb")
+        except ImportError:
+            raise ImportError("ChromaDB is not installed. Please install it using 'pip install langformers[chromadb]'.")
+
         self.collection = None
         if embedder is None:
             raise ValueError("An embedding model must be provided.")
