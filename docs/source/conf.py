@@ -5,7 +5,7 @@ sys.path.insert(0, os.path.abspath("../../"))
 
 
 project = "langformers"
-copyright = "2025. Built with ❤️ for the future of language AI. "
+copyright = "2025. Built with ❤️ for the future of language AI"
 author = "Rabindra Lamsal"
 
 try:
@@ -57,6 +57,7 @@ html_static_path = ['_static']
 html_logo = "_static/logo.png"
 html_css_files = ["custom.css"]
 
+html_baseurl = "https://langformers.com/"
 
 favicons = [
    {"rel": "shortcut icon", "href": "favicon.ico"},
