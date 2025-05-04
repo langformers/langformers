@@ -1,6 +1,9 @@
 Seamless Chat with LLMs
 ==========================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Chatting with generative Large Language Models (LLMs) is easy with Langformers.
 
 .. note::

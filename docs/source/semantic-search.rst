@@ -1,6 +1,9 @@
 Semantic Search
 =================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Langformers can help you quickly set up a semantic search engine for vectorized text retrieval. All you need to do
 is specify an embedding model, the type of database (FAISS, ChromaDB, or Pinecone), and an index type (if required).
 

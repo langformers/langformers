@@ -1,6 +1,9 @@
 Further Pretrain MLMs
 =======================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Continuing the pretraining of a Masked Language Model (MLM) follows a similar approach to how we :doc:`pretrain
 MLMs <pretrain-mlms>`. However, unlike standard pretraining, we don’t initialize the model with random weights.
 Instead, there are two possible scenarios:

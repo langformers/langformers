@@ -39,6 +39,7 @@ html_theme_options = {
     "collapse_navigation": False,
     "navigation_depth": 2,
     "logo_only": True,
+    "canonical_url": "https://langformers.com/",
 }
 
 html_context = {
@@ -56,8 +57,6 @@ html_theme = 'sphinx_rtd_theme'
 html_static_path = ['_static']
 html_logo = "_static/logo.png"
 html_css_files = ["custom.css"]
-
-html_baseurl = "https://langformers.com/"
 
 favicons = [
    {"rel": "shortcut icon", "href": "favicon.ico"},

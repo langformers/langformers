@@ -1,6 +1,9 @@
 Data Labeling using LLMs
 ==========================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Generative LLMs are highly effective for data labeling, extending beyond just conversation.
 Langformers offers the simplest way to define `labels` and `conditions` for labelling texts with LLMs.
 

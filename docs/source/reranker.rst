@@ -1,6 +1,9 @@
 Rerank Sentences
 ==================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Langformers also supports reranking. Reranking reorders a list of documents (or sentences/texts) based on their relevance to a given query.
 
 Vector search may not always yield the most relevant results. Reranking can help improve the quality of the retrieved documents by reordering them based on their relevance to the query.

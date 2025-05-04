@@ -1,6 +1,9 @@
 Pretrain MLMs
 ================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Masked Language Models (MLMs) like BERT [Devlin2019]_, RoBERTa [Liu2019]_, and MPNet [Song2020]_ are auto-encoding
 models that use only the encoder component of the Transformer [Vaswani2017]_ architecture. These models are ideal
 for tasks requiring the entire input sequence to make decisions, such as text classification

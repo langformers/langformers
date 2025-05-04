@@ -1,6 +1,9 @@
 LLM Inference
 =============
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 If you want to perform LLM inference through a REST API, you can send a POST request to ``/api/generate``.
 This is great when you're building your own application.
 

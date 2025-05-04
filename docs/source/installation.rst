@@ -1,6 +1,9 @@
 Installation
 ==============
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Langformers requires **Python 3.10 or later**. Its installation is simple!
 
 .. note::

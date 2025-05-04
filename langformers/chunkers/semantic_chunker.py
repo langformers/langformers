@@ -8,7 +8,7 @@ from langformers.commons import print_message
 class SemanticChunker:
     def __init__(self, model_name: str):
         """
-        Initialize the SemanticChunker with a model name and chunk size.
+        Initializes the SemanticChunker class.
         
         Args:
             model_name (str): The name of the Hugging Face model to use for embedding. The model's tokenizer will be used for tokenization.
@@ -23,16 +23,15 @@ class SemanticChunker:
         self.first_chunker = FixedSizeChunker(model_name)
 
     
-    def chunk(self, document: str, initial_chunk_size: int, max_chunk_size: int, similarity_threshold: float = 0.2, save_as: str = None):
+    def chunk(self, document: str, initial_chunk_size: int, max_chunk_size: int, similarity_threshold: float = 0.2):
         """
         Chunk the document into semantic segments based on cosine similarity.
         
         Args:
-            document (str, required): The document to be chunked.
+            document (str, required): The document to be chunked. If the document is something like PDF, it should be converted to a string first.
             initial_chunk_size (int, required): The maximum size of chunks to be created for merging later.
             max_chunk_size (int, required): The maximum size of the final chunks.
             similarity_threshold (float, default=0.2): The threshold for cosine similarity to merge chunks.
-            save_as (str, default=None): If provided, the chunks will be saved to this file.
         """
 
         chunks = self.first_chunker.chunk(document, chunk_size=initial_chunk_size)
@@ -64,10 +63,4 @@ class SemanticChunker:
         if temp_chunk:
             final_chunks.append(temp_chunk)
 
-        if not save_as:
-            return final_chunks
-        else:
-            with open(save_as, 'w') as f:
-                for chunk in final_chunks:
-                    f.write(chunk + "\n")
-            print_message(f"Chunks saved to {save_as}")
+        return final_chunks

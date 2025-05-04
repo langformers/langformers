@@ -1,6 +1,9 @@
 Embed Sentences
 =================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Using state-of-the-art embedding models for vectorizing your sentences takes just two steps with Langformers.
 First, create an embedder with ``create_embedder()``, and then call ``embed()`` on it.
 

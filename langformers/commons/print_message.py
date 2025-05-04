@@ -10,9 +10,8 @@ def print_message(message: str, level: str = "info"):
     Custom print message function for Langformers that's logging-compatible.
 
     Args:
-        message (str): The message to print/log.
-        level (str): Log level ("debug", "info", "warning", "error", "critical").
-                     Defaults to "info".
+        message (str, required): The message to print/log.
+        level (str, default="info"): Log level ("debug", "info", "warning", "error", "critical").
     """
 
     colored_message = f"{Fore.CYAN}[Langformers]{Style.RESET_ALL} {message}"

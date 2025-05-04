@@ -1,6 +1,9 @@
 Mimick a Pretrained Model
 ============================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Langformers can train a custom model to replicate the embedding space
 of a pretrained teacher model.
 

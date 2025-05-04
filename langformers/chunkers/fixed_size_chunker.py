@@ -22,7 +22,7 @@ class FixedSizeChunker:
         except Exception as e:
             raise ValueError(f"Error loading tokenizer: {e}")
 
-    def chunk(self, document: str, chunk_size: int = None, overlap: int = 0, save_as: str = None):
+    def chunk(self, document: str, chunk_size: int = None, overlap: int = 0):
         """
         Splits the document into fixed-size chunks based on the tokenizer's encoding.
 
@@ -30,7 +30,6 @@ class FixedSizeChunker:
             document (str, required): The document to be chunked. If the document is something like PDF, it should be converted to a string first.
             chunk_size (int, default=None): The size of each chunk. If not provided, the tokenizer's max length will be used.
             overlap (int, default=0): The number of tokens to overlap between consecutive chunks.
-            save_as (str, default=None): If provided, the chunks will be saved to this file (e.g., `chunks.txt`).
         """
 
         if chunk_size is None:
@@ -54,15 +53,7 @@ class FixedSizeChunker:
 
         chunked_tokens = []
 
-        for i in tqdm(range(0, len(tokens), chunk_size - overlap), desc="Chunking document"):
+        for i in range(0, len(tokens), chunk_size - overlap):
             chunked_tokens.append(self.tokenizer.decode(tokens[i:i + chunk_size], skip_special_tokens=True, clean_up_tokenization_spaces=True).strip())
         
-        if not save_as:
-            return chunked_tokens
-        else:
-            with open(save_as, 'w') as f:
-                for chunk in tqdm(chunked_tokens, desc="Saving chunks"):
-                    f.write(chunk + '\n')
-            print_message(f"Chunks saved to {save_as}")
-        
-        
+        return chunked_tokens

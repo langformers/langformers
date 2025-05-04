@@ -6,7 +6,7 @@ from .generators import OllamaGenerator, HuggingFaceGenerator
 from .labellers import OllamaDataLabeller, HuggingFaceDataLabeller
 from .mimickers import EmbeddingMimicker
 from .searchers import FaissSearcher, ChromaDBSearcher, PineconeSearcher
-from .chunkers import FixedSizeChunker, SemanticChunker
+from .chunkers import FixedSizeChunker, SemanticChunker, RecursiveChunker
 
 __all__ = [
     "tasks",
@@ -24,6 +24,7 @@ __all__ = [
     "PineconeSearcher",
     "FixedSizeChunker",
     "SemanticChunker",
+    "RecursiveChunker",
 ]
 
 

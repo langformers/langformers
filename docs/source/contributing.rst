@@ -1,6 +1,9 @@
 Contributing
 ===============
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Thank you for considering a contribution to **Langformers**!
 Whether it's a bug fix, a feature, or documentation improvement, your help is appreciated. 💙
 

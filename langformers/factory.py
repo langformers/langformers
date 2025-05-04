@@ -7,7 +7,7 @@ from .labellers import OllamaDataLabeller, HuggingFaceDataLabeller
 from .mimickers import EmbeddingMimicker
 from .searchers import FaissSearcher, ChromaDBSearcher, PineconeSearcher
 from .rerankers import CrossEncoder
-from .chunkers import FixedSizeChunker, SemanticChunker
+from .chunkers import FixedSizeChunker, SemanticChunker, RecursiveChunker
 
 
 class tasks:
@@ -232,7 +232,7 @@ class tasks:
         Factory method for creating a chunker that splits a document into smaller pieces (chunks).
 
         Args:
-            strategy (str, required): The chunking strategy. Currently supported startegies: ``fixed_size``, ``semantic``.
+            strategy (str, required): The chunking strategy. Currently supported startegies: ``fixed_size``, ``semantic``, ``recursive``.
             **kwargs (str, required): Chunking strategy specific keyword arguments.
 
         Returns:
@@ -240,10 +240,12 @@ class tasks:
 
                 - If `strategy` is "fixed_size", an instance of `FixedSizeChunker` is returned.
                 - If `strategy` is "semantic", an instance of `SemanticChunker` is returned.
+                - If `strategy` is "recursive", an instance of `RecursiveChunker` is returned.
         """
         strategies = {
             "fixed_size": FixedSizeChunker,
-            "semantic": SemanticChunker
+            "semantic": SemanticChunker,
+            "recursive": RecursiveChunker
         }
         if strategy not in strategies:
             raise ValueError(f"Unsupported chunking strategy: {strategy}. Available chunking strategy: {list(strategies.keys())}")

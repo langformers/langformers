@@ -1,6 +1,9 @@
 Chunking
 ===========
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Chunking breaks down large documents into smaller, manageable pieces (or "chunks"). This is especially important when dealing with documents that exceed the token limits of your embedding model. When designing RAG pipelines, it's crucial to consider the chunking strategy to ensure that the model can effectively process and retrieve relevant information.
 
 There are many ways to chunk documents, and the best approach depends on the specific use case. Langformers offers following chunking strategies:
@@ -31,8 +34,6 @@ Here's a simple example of how to use the fixed-size chunker:
                             chunk_size=8)
 
 **Overlapping**: If ``overlap`` is provided to ``chunk()``, the chunker will create overlapping chunks.
-
-Also, instead of getting chunks as a list, you can save them to a file by providing the ``save_as`` parameter.
 
 .. tabs::
 

@@ -1,6 +1,9 @@
 Dependencies
 ==============
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Langformers is built with ❤️ around the following widely adopted python libraries.
 
 Core

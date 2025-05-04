@@ -1,6 +1,9 @@
 Tasks
 --------
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 tasks
 ^^^^^^^
 .. autoclass:: langformers.tasks

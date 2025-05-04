@@ -1,6 +1,9 @@
 Train Text Classifiers
 =========================
 
+.. raw:: html
+   :file: ./_includes/official_links.html
+
 Training text classifiers with Langformers is quite straightforward.
 
 First, we define the training configurations, prepare the dataset, and select the MLM we would like to fine-tune for the classification task. All these can be achieved in few lines of code, but fully customizable!

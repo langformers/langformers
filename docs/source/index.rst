@@ -1,7 +1,8 @@
 Langformers Documentation
 ===========================
 
-🚀 **Unified NLP Pipelines for Language Models**
+.. raw:: html
+   :file: ./_includes/official_links.html
 
 Langformers is a powerful yet user-friendly Python library designed for seamless interaction with large language models (LLMs) and masked language models (MLMs). It unifies the following core NLP pipelines into a single, cohesive API:
 
