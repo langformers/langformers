@@ -33,6 +33,9 @@ class SemanticChunker:
             max_chunk_size (int, required): The maximum size of the final chunks.
             similarity_threshold (float, default=0.2): The threshold for cosine similarity to merge chunks.
         """
+        
+        if not isinstance(document, str):
+            raise ValueError("Document must be a string.")
 
         chunks = self.first_chunker.chunk(document, chunk_size=initial_chunk_size)
         embeddings = self.embedder.embed(chunks)

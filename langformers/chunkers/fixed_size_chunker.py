@@ -28,9 +28,12 @@ class FixedSizeChunker:
 
         Args:
             document (str, required): The document to be chunked. If the document is something like PDF, it should be converted to a string first.
-            chunk_size (int, default=None): The size of each chunk. If not provided, the tokenizer's max length will be used.
+            chunk_size (int, default=None): The maximum size of each chunk. If not provided, the tokenizers's max length will be used.
             overlap (int, default=0): The number of tokens to overlap between consecutive chunks.
         """
+
+        if not isinstance(document, str):
+            raise ValueError("Document must be a string.")
 
         if chunk_size is None:
             chunk_size = self.tokenizer.model_max_length

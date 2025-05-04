@@ -1,6 +1,7 @@
 import os
 import sys
 import subprocess
+
 sys.path.insert(0, os.path.abspath("../../"))
 
 
@@ -21,7 +22,7 @@ extensions = [
     "sphinx.ext.autodoc",
     "sphinx.ext.autosummary",
     "sphinx.ext.napoleon",
-    "sphinx_favicon"
+    "sphinx_favicon",
 ]
 
 autodoc_default_options = {
@@ -46,21 +47,21 @@ html_context = {
     "display_github": True,
     "github_user": "langformers",
     "github_repo": "langformers",
-    "github_version": "main", 
+    "github_version": "main",
     "conf_py_path": "/docs/source/",
 }
 
-templates_path = ['_templates']
+templates_path = ["_templates"]
 exclude_patterns = []
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
 html_logo = "_static/logo.png"
 html_css_files = ["custom.css"]
 
 favicons = [
-   {"rel": "shortcut icon", "href": "favicon.ico"},
-   {"rel": "icon", "type": "image/svg+xml", "href": "favicon.svg"},
-   {"rel": "icon", "type": "image/png", "href": "favicon-96x96.png", "sizes": "96x96"},
-   {"rel": "apple-touch-icon", "sizes": "180x180", "href": "apple-touch-icon.png"}
+    {"rel": "shortcut icon", "href": "favicon.ico"},
+    {"rel": "icon", "type": "image/svg+xml", "href": "favicon.svg"},
+    {"rel": "icon", "type": "image/png", "href": "favicon-96x96.png", "sizes": "96x96"},
+    {"rel": "apple-touch-icon", "sizes": "180x180", "href": "apple-touch-icon.png"},
 ]
