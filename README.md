@@ -1,4 +1,5 @@
-[![PyPI](https://img.shields.io/pypi/v/langformers.svg)](https://pypi.org/project/langformers/) [![Downloads](https://static.pepy.tech/badge/langformers)](https://pepy.tech/project/langformers) [![Docs](https://img.shields.io/website?url=https%3A%2F%2Flangformers.com)](https://langformers.com) [![License](https://img.shields.io/github/license/langformers/langformers?color=blue)](https://github.com/langformers/langformers/blob/main/LICENSE)
+[![PyPI](https://img.shields.io/pypi/v/langformers.svg)](https://pypi.org/project/langformers/) ![Python](https://img.shields.io/pypi/pyversions/langformers) [![License](https://img.shields.io/github/license/langformers/langformers?color=blue)](https://github.com/langformers/langformers/blob/main/LICENSE) [![Docs](https://readthedocs.org/projects/langformers/badge/)](https://langformers.com)
+
   
 # Langformers
 
