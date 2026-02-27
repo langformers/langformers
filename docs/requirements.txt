@@ -1,4 +1,6 @@
-sphinx
+Sphinx==8.2.3
+docutils==0.21.2
+
 sphinx-rtd-theme
 sphinx-tabs
 sphinx-autodoc-typehints
