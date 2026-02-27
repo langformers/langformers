@@ -54,7 +54,7 @@ Langformers includes optional integrations you can install depending on your use
 
 ## Supported Tasks
 
-Below are the pre-built NLP tasks available in Langformers. Each link points to an example in Langformer's documentation to help you get started quickly.
+Below are the pre-built NLP tasks available in Langformers. Each link points to an example in the documentation to help you get started quickly.
 
 ### Generative LLMs (e.g., Llama, Mistral, DeepSeek)
 
